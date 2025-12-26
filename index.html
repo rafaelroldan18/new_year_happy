@@ -210,32 +210,79 @@
             font-family: 'Delius Swash Caps', cursive;
         }
 
-        /* OVERLAY */
+        /* OVERLAY (TARJETA 2 - PANTALLA COMPLETA) */
         #secret-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, #0a0f1a, #050a14);
+            position: fixed;
+            /* 🔸 Ahora es fijo respecto a la pantalla */
+            top: 15px;
+            /* 🔸 Pequeño margen superior */
+            left: 15px;
+            /* 🔸 Pequeño margen izquierdo */
+            right: 15px;
+            /* 🔸 Pequeño margen derecho */
+            bottom: 15px;
+            /* 🔸 Pequeño margen inferior */
+            background: linear-gradient(135deg, #0a1428, #050a14);
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
-            padding: 2rem;
-            transform: translateY(105%);
-            transition: transform 0.6s ease;
-            z-index: 10;
-            overflow: hidden;
+            padding: 3rem 1.5rem 4rem 1.5rem;
+            transform: translateY(110%);
+            /* Empieza fuera de la pantalla */
+            transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 1000;
+            /* 🔸 Por encima de TODO */
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-sizing: border-box;
+            border-radius: 30px;
+            border: 1px solid rgba(229, 178, 163, 0.3);
+            box-shadow: 0 0 100px rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
         }
 
         #secret-overlay.open {
             transform: translateY(0);
         }
 
+        /* Contenedor interno para asegurar el centrado y flujo */
+        .overlay-content {
+            width: 100%;
+            max-width: 500px;
+            /* 🔸 Mantiene el texto legible en pantallas anchas */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            margin: auto 0;
+            /* Centra el contenido verticalmente si hay espacio */
+        }
+
+        #secret-overlay .message-p {
+            margin: 0;
+            /* Controlado por el gap del contenedor */
+            width: 100%;
+            text-align: center;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-main);
+        }
+
         .back-link {
             margin-top: 2rem;
-            font-size: 0.8rem;
-            text-decoration: underline;
+            margin-bottom: 2rem;
+            padding: 12px 30px;
+            font-size: 0.9rem;
+            text-decoration: none;
             cursor: pointer;
             font-family: 'Delius Swash Caps', cursive;
+            color: var(--rose-gold);
+            border: 1px solid rgba(229, 178, 163, 0.3);
+            border-radius: 25px;
+            background: rgba(229, 178, 163, 0.05);
+            transition: 0.3s;
+            z-index: 1010;
         }
 
         /* ANIMACIÓN DE CORAZONES */
@@ -288,35 +335,9 @@
             <div class="sparkle" style="top: 60%; right: 15%; animation-delay: 0.5s;"></div>
             <div class="sparkle" style="bottom: 10%; right: 25%; animation-delay: 2.5s;"></div>
 
-            <div id="secret-overlay">
-                <br>
-                <div class="ornament"></div><br>
-
-                <p class="message-p" style="font-style: italic; font-size: 0.85rem;">
-                    Para ti: <span class="highlight">Evelyn</span>.
-                </p><br>
-
-                <p class="message-p" style="font-style: italic;">
-                    "Aunque nuestra conexión es digital, la chispa es muy real.
-                    Fue una de las sorpresas más lindas de mi año. Para este 2026, mi mayor deseo es que tu vida se
-                    llene de la misma luz que tú transmites. Que no te falten motivos para sonreír, que cada meta que te
-                    propongas encuentre su camino y que sigamos compartiendo esta complicidad que hace todo más
-                    especial.
-
-                    <br> Que venga cargado de salud, éxitos y momentos inolvidables. <br>
-                    ¡Dios te bendiga siempre! <br>
-                    ¡Feliz Año Nuevo!
-                </p><br>
-
-                <p class="message-p" style="font-style: italic; font-size: 0.85rem;">
-                    Con cariño: <span class="highlight">Rafael Roldan</span>.
-                </p>
-
-                <div class="back-link" onclick="toggleMessage()">Regresar</div>
-            </div>
 
             <div class="main-title"></div>
-            <h1 >Feliz año</h1>
+            <h1>Feliz año</h1>
             <h2 class="main-title">2026</h2>
 
             <p class="message-p">
@@ -328,6 +349,35 @@
 
         </main>
         <br>
+    </div>
+
+    <div id="secret-overlay">
+        <div class="overlay-content">
+            <div class="ornament"></div>
+
+            <p class="message-p" style="font-size: 1.1rem; color: var(--rose-gold-light);">
+                Para ti: <span class="highlight">Evelyn</span>.
+            </p>
+
+            <p class="message-p">
+                "Aunque nuestra conexión es digital, la chispa es muy real.
+                Fue una de las sorpresas más lindas de mi año. Para este 2026, mi mayor deseo es que tu vida se
+                llene de la misma luz que tú transmites. Que no te falten motivos para sonreír, que cada meta que te
+                propongas encuentre su camino y que sigamos compartiendo esta complicidad que hace todo más especial."
+            </p>
+
+            <p class="message-p" style="font-size: 1.1rem;">
+                Que venga cargado de salud, éxitos y momentos inolvidables.<br>
+                ¡Dios te bendiga siempre!<br>
+                ¡Feliz Año Nuevo!
+            </p>
+
+            <p class="message-p" style="font-size: 1.1rem; color: var(--rose-gold-light);">
+                Con cariño: <span class="highlight">Rafael Roldan</span>.
+            </p>
+
+            <div class="back-link" onclick="toggleMessage()">Regresar</div>
+        </div>
     </div>
 
     <script>
